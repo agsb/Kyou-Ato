@@ -13,7 +13,7 @@ Highlight the first five tasks and shows blocks of 20 to 20 tasks,
 The tasks are keeped in a list of cards with
 
     "List" : {
-      "Order" : "  ",
+      "Order" : " ",
       "Uuid" : " ",
       "Next" : "  "
       }

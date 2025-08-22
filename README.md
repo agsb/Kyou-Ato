@@ -51,7 +51,20 @@ In format of CSV or JSON, one entry by line, List (order, uuid), Task (uuid, tim
 
 ## Does
 
-the cards could be sorted based on specifics per data, per state, etc
+the cards are only sorted by user, moving cards top-down.
+    At top is most priority and sort order is always preserved;
+
+the cards could be select by states or not states;
+
+the cards could be selected based per due data;
+
+## Metrics
+
+the mean interval time (days) between 
+    TODO and WORK, WORK and DONE, TODO and DONE;
+
+the mean quantity of tasks inside each interval;
+
 
 
   

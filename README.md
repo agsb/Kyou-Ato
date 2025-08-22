@@ -4,7 +4,7 @@ __After Today__
 
 Kyou Ato (今日 後) is an easy personal *Kan-Ban*. 
 
-It's manages one list of tasks, that can be ordened top-down by high to low priority and selected by dates or states.
+It's manages only one list of tasks, that can be ordened top-down by high to low priority and selected by dates or states.
 
 Highlight the first five tasks and shows blocks of 20 to 20 tasks.
 

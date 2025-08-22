@@ -2,24 +2,19 @@
 
 __After Today__
 
-Kyou Ato is a easy personal *Kan-Ban*. 
+Kyou Ato (今日 後) is an easy personal *Kan-Ban*. 
 
-It's manages an list of tasks, that can be ordened top-down by high to low priority and selected by dates or states.
+It's manages one list of tasks, that can be ordened top-down by high to low priority and selected by dates or states.
 
-Highlight the first five tasks and shows blocks of 20 to 20 tasks, 
+Highlight the first five tasks and shows blocks of 20 to 20 tasks.
 
 ## Cards
 
 The tasks are keeped in a list of cards with
-
-    "List" : {
+     
+    "Task" : {
+      "Uuid" : " ",
       "Order" : " ",
-      "Uuid" : " ",
-      "Next" : "  "
-      }
-      
-    "Card" : {
-      "Uuid" : " ",
       "State" : " ",
       "Time0" : " ",
       "Time1" : " ",
@@ -29,41 +24,43 @@ The tasks are keeped in a list of cards with
       "Notes" : " "
       }
 
-In format of CSV or JSON, one entry by line, List (order, uuid), Task (uuid, time0, time1, time2, time3, title, notes)
+In format JSON or CSV, one entry by line, Task (uuid, order, time0, time1, time2, time3, title, notes) ;
 
-  Order is the ordinary sequence ;
+Order is the ordinary sequence ;
   
   Uuid is the classic UUID ;
   
   State is one of ( 1 TODO, 2 WORK, 3 DONE, 0 HOLD ). 
       A task in TODO is waiting to start, in WORK is in progress, in DONE is finished. 
-      A task in HOLD is waiting some external resource, or action or event, and ;
+      A task is in HOLD while waiting some external resource, or action or event, and will return to WORK ;
   
   Time0, Time1, Time2, Time3 are time in YEAR.MOUNTH.DAY. 
       Time0 is when task goes into list, 
       Time1 is when task starts, 
       Time2 is when task is done, 
-      Time3 is the deadline of task;
+      Time3 is the deadline of task ;
 
-  Title is a text of less than 120 characters.
+  Title is a text of less than 120 characters ;
 
   Notes is a small text with a URI to the notebook ;
 
 ## Does
 
 the cards are only sorted by user, moving cards top-down.
-    At top is most priority and sort order is always preserved;
+    At top is most priority and sort order is always preserved ;
 
-the cards could be select by states or not states;
+the cards could be select by states or not states ;
 
-the cards could be selected based per due data;
+the cards could be selected based per due data ;
+
+eventualy cards could have colors ;
 
 ## Metrics
 
 the mean interval time (days) between 
-    TODO and WORK, WORK and DONE, TODO and DONE;
+    TODO and WORK, WORK and DONE, TODO and DONE ;
 
-the mean quantity of tasks inside each interval;
+the mean quantity of tasks inside each interval ;
 
 
 

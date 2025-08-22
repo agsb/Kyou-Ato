@@ -8,6 +8,8 @@ It's manages only one list of tasks, that can be ordened top-down by high to low
 
 Highlight the first five tasks and shows blocks of 20 to 20 tasks.
 
+Think in Post-Its with steroids.
+
 ## Cards
 
 The tasks are keeped in a list of cards with

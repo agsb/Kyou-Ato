@@ -10,6 +10,13 @@ Highlight the first five tasks and shows blocks of 20 to 20 tasks.
 
 Think in Post-Its with steroids.
 
+## Plataform
+
+    the Kyou-Ato always with you. 
+
+    It is a single html-css-javscript, as (tiddlywiki)[https://classic.tiddlywiki.com/]
+    but manage cards, with dates and order.
+
 ## Cards
 
 The tasks are keeped in a list of cards with

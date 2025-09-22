@@ -17,13 +17,13 @@ The tasks are keeped in a list of cards with
     "Task" : {
       "Uuid" : " ",
       "Order" : " ",
+      "Notes" : " "
       "State" : " ",
       "Time0" : " ",
       "Time1" : " ",
       "Time2" : " ",
       "Time3" : " ",
       "Title" : " ",
-      "Notes" : " "
       }
 
 In format JSON or CSV, one entry by line, Task (uuid, order, time0, time1, time2, time3, title, notes) ;
@@ -32,8 +32,8 @@ Order is the ordinary sequence ;
   
   Uuid is the classic UUID ;
   
-  State is one of ( 1 TODO, 2 WORK, 3 DONE, 0 HOLD ). 
-      A task in TODO is waiting to start, in WORK is in progress, in DONE is finished. 
+  State is one of ( 1 TODO, 2 TASK, 3 DONE, 0 HOLD ). 
+      A task in TODO is waiting to start, in TASK is in progress, in DONE is finished. 
       A task is in HOLD while waiting some external resource, or action or event, and will return to WORK ;
   
   Time0, Time1, Time2, Time3 are time in YEAR.MOUNTH.DAY. 
@@ -60,7 +60,7 @@ eventualy cards could have colors ;
 ## Metrics
 
 the mean interval time (days) between 
-    TODO and WORK, WORK and DONE, TODO and DONE ;
+    TODO and TASK, TASK and DONE, TODO and DONE ;
 
 the mean quantity of tasks inside each interval ;
 

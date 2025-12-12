@@ -39,16 +39,16 @@ Order is the ordinary sequence ;
   
   Uuid is the classic UUID ;
   
-  State is one of ( 1 TODO, 2 TASK, 3 DONE, 0 HOLD ). 
-      A task in TODO is waiting to start, in TASK is in progress, in DONE is finished. 
-      A task is in HOLD while waiting some external resource, or action or event, and will return to WORK ;
+  State is one of ( 1 TODO, 2 WORK, 3 DONE, 0 HOLD ). 
+      A task in TODO is waiting to start, in WORK is in progress, in DONE is finished. 
+      A task is in HOLD when was in WORK and is waiting some external resource, or action or event, and will return to WORK ;
   
   Time0, Time1, Time2, Time3 are time in YEAR.MOUNTH.DAY. 
-      Time0 is when task goes into list, 
-      Time1 is when task starts, 
-      Time2 is when task is done, 
-      Time3 is the deadline of task ;
-
+      Time0 is the deadline of task,
+      Time1 is when task goes into list, 
+      Time2 is when task starts, 
+      Time3 is when task is done ;
+      
   Title is a text of less than 120 characters ;
 
   Notes is a small text with a URI to the notebook ;
@@ -67,7 +67,7 @@ eventualy cards could have colors ;
 ## Metrics
 
 the mean interval time (days) between 
-    TODO and TASK, TASK and DONE, TODO and DONE ;
+    TODO and WORK, WORK and DONE, TODO and DONE ;
 
 the mean quantity of tasks inside each interval ;
 

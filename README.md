@@ -49,7 +49,7 @@ Order is the ordinary sequence ;
       Time2 is when task starts, 
       Time3 is when task is done ;
       
-  Title is a text of less than 120 characters ;
+  Title is a text of less than 124 characters ;
 
   Notes is a small text with a URI to the notebook ;
 

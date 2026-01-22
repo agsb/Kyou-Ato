@@ -24,6 +24,14 @@ js
 
 localStorage.clear();
 
+## Geolocation
+
+The GeolocationCoordinates interface doesn't inherit any methods.
+
+GeolocationCoordinates.toJSON()
+
+Returns a JSON representation of the GeolocationCoordinates object and enables serialization with JSON.stringify().
+
 
 ## From stackoverflow
 

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Todo List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<!-- Code from https://thaura.ai/ 19/02/2026 20:54h SP -->
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            <i class="fas fa-tasks mr-2"></i>Advanced Todo List
+        </h1>
+        
+        <!-- Add Task Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Add New Task</h2>
+            <form id="taskForm" class="space-y-4">
+                div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
+                    <input type="text" id="taskTitle" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Enter task title...">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 1 Label</label>
+                        <input type="text" id="date1Label" value="Created" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 1</label>
+                        <input type="date" id="date1" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 2 Label</label>
+                        <input type="text" id="date2Label" value="Due Date" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 2</label>
+                        <input type="date" id="date2" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 3 Label</label>
+                        <input type="text" id="date3Label" value="Start Date" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 3</label>
+                        <input type="date" id="date3" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 4 Label</label>
+                        <input type="text" id="date4Label" value="Completed" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 4</label>
+                        <input type="date" id="date4" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 5 Label</label>
+                        <input type="text" id="date5Label" value="Modified" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date 5</label>
+                        <input type="date" id="date5" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    <i class="fas fa-plus mr-2"></i>Add Task
+                </button>
+            </form>
+        </div>
+        
+        <!-- Task Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-blue-600" id="totalTasks">0</div>
+                <div class="text-sm text-gray-600">Total Tasks</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-green-600" id="completedTasks">0</div>
+                <div class="text-sm text-gray-600">Completed</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-orange-600" id="pendingTasks">0</div>
+                <div class="text-sm text-gray-600">Pending</div>
+            </div>
+        </div>
+        
+        <!-- Tasks List -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="p-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold">Tasks</h2>
+            </div>
+            <div id="tasksList" class="p-4">
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                    <p>No tasks yet. Add your first task above!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TodoApp {
+            constructor() {
+                this.tasks = [];
+                this.taskIdCounter = 1;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.updateStats();
+                this.renderTasks();
+            }
+
+            bindEvents() {
+                document.getElementById('taskForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addTask();
+                });
+            }
+
+            addTask() {
+                const title = document.getElementById('taskTitle').value;
+                const dates = [];
+                
+                for (let i = 1; i <= 5; i++) {
+                    const label = document.getElementById(`date${i}Label`).value;
+                    const date = document.getElementById(`date${i}`).value;
+                    dates.push({ label, date });
+                }
+
+                const task = {
+                    id: this.taskIdCounter++,
+                    title,
+                    dates,
+                    completed: false,
+                    createdAt: new Date().toISOString()
+                };
+
+                this.tasks.push(task);
+                this.renderTasks();
+                this.updateStats();
+                this.resetForm();
+            }
+
+            resetForm() {
+                document.getElementById('taskForm').reset();
+                // Reset date labels to defaults
+                document.getElementById('date1Label').value = 'Created';
+                document.getElementById('date2Label').value = 'Due Date';
+                document.getElementById('date3Label').value = 'Start Date';
+                document.getElementById('date4Label').value = 'Completed';
+                document.getElementById('date5Label').value = 'Modified';
+            }
+
+            toggleTask(taskId) {
+                const task = this.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.completed = !task.completed;
+                    if (task.completed) {
+                        // Set completed date if not already set
+                        const completedDateIndex = 3; // 4th date (index 3)
+                        if (!task.dates[completedDateIndex].date) {
+                            task.dates[completedDateIndex].date = new Date().toISOString().split('T');
+                        }
+                    }
+                    this.renderTasks();
+                    this.updateStats();
+                }
+            }
+
+            deleteTask(taskId) {
+                this.tasks = this.tasks.filter(t => t.id !== taskId);
+                this.renderTasks();
+                this.updateStats();
+            }
+
+            formatDate(dateString) {
+                if (!dateString) return 'Not set';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+
+            renderTasks() {
+                const tasksList = document.getElementById('tasksList');
+                
+                if (this.tasks.length === 0) {
+                    tasksList.innerHTML = `
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                            <p>No tasks yet. Add your first task above!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                tasksList.innerHTML = this.tasks.map(task => `
+                    <div class="border border-gray-200 rounded-lg p-4 mb-4 ${task.completed ? 'bg-green-50' : 'bg-white'}">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center mb-2">
+                                    <button onclick="app.toggleTask(${task.id})" 
+                                            class="mr-3 text-xl ${task.completed ? 'text-green-600' : 'text-gray-400'} hover:text-green-600 transition-colors">
+                                        <i class="fas ${task.completed ? 'fa-check-circle' : 'fa-circle'}"></i>
+                                    </button>
+                                    <h3 class="text-lg font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-800'}">
+                                        ${task.title}
+                                    </h3>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 ml-8">
+                                    ${task.dates.map((dateObj, index) => `
+                                        <div class="text-sm">
+                                            <span class="font-medium text-gray-600">${dateObj.label}:</span>
+                                            <span class="${index === 3 && task.completed ? 'text-green-600' : 'text-gray-800'} ml-1">
+                                                ${this.formatDate(dateObj.date)}
+                                            </span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <button onclick="app.deleteTask(${task.id})" 
+                                    class="text-red-500 hover:text-red-700 ml-4 transition-colors">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateStats() {
+                const total = this.tasks.length;
+                const completed = this.tasks.filter(t => t.completed).length;
+                const pending = total - completed;
+
+                document.getElementById('totalTasks').textContent = total;
+                document.getElementById('completedTasks').textContent = completed;
+                document.getElementById('pendingTasks').textContent = pending;
+            }
+        }
+
+        // Initialize the app
+        const app = new TodoApp();
+    </script>
+</body>
+</html>
+

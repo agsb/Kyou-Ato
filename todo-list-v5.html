@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List with Priority & Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+            <i class="fas fa-tasks mr-2"></i>Advanced Todo List
+        </h1>
+        
+        <!-- Add Task Form -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Add New Task</h2>
+            <form id="taskForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
+                    <input type="text" id="taskTitle" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="Enter task title...">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                        <input type="date" id="startDate" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+                        <input type="date" id="dueDate" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                        <select id="taskPriority" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Order</label>
+                        <input type="number" id="taskOrder" min="1" max="100" value="1"
+                               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    <i class="fas fa-plus mr-2"></i>Add Task
+                </button>
+            </form>
+        </div>
+        
+        <!-- Task Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-blue-600" id="totalTasks">0</div>
+                <div class="text-sm text-gray-600">Total Tasks</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-green-600" id="completedTasks">0</div>
+                <div class="text-sm text-gray-600">Completed</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-orange-600" id="highPriorityTasks">0</div>
+                <div class="text-sm text-gray-600">High Priority</div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <div class="text-2xl font-bold text-purple-600" id="overdueTasks">0</div>
+                <div class="text-sm text-gray-600">Overdue</div>
+            </div>
+        </div>
+        
+        <!-- Tasks List -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="p-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold">Tasks</h2>
+            </div>
+            <div id="tasksList" class="p-4">
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                    <p>No tasks yet. Add your first task above!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class TodoApp {
+            constructor() {
+                this.tasks = [];
+                this.taskIdCounter = 1;
+                this.init();
+            }
+
+            init() {
+                this.loadTasks();
+                this.bindEvents();
+                this.renderTasks();
+                this.updateStats();
+            }
+
+            bindEvents() {
+                document.getElementById('taskForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.addTask();
+                });
+            }
+
+            loadTasks() {
+                const savedTasks = localStorage.getItem('todoTasks');
+                const savedCounter = localStorage.getItem('taskIdCounter');
+                
+                if (savedTasks) {
+                    this.tasks = JSON.parse(savedTasks);
+                }
+                
+                if (savedCounter) {
+                    this.taskIdCounter = parseInt(savedCounter);
+                }
+            }
+
+            saveTasks() {
+                localStorage.setItem('todoTasks', JSON.stringify(this.tasks));
+                localStorage.setItem('taskIdCounter', this.taskIdCounter.toString());
+            }
+
+            addTask() {
+                const title = document.getElementById('taskTitle').value;
+                const startDate = document.getElementById('startDate').value;
+                const dueDate = document.getElementById('dueDate').value;
+                const priority = document.getElementById('taskPriority').value;
+                const order = parseInt(document.getElementById('taskOrder').value) || 1;
+
+                const task = {
+                    id: this.taskIdCounter++,
+                    title,
+                    startDate,
+                    dueDate,
+                    priority,
+                    order,
+                    completed: false,
+                    createdAt: new Date().toISOString()
+                };
+
+                this.tasks.push(task);
+                this.saveTasks();
+                this.renderTasks();
+                this.updateStats();
+                this.resetForm();
+            }
+
+            resetForm() {
+                document.getElementById('taskForm').reset();
+                document.getElementById('taskOrder').value = '1';
+            }
+
+            toggleTask(taskId) {
+                const task = this.tasks.find(t => t.id === taskId);
+                if (task) {
+                    task.completed = !task.completed;
+                    this.saveTasks();
+                    this.renderTasks();
+                    this.updateStats();
+                }
+            }
+
+            deleteTask(taskId) {
+                this.tasks = this.tasks.filter(t => t.id !== taskId);
+                this.saveTasks();
+                this.renderTasks();
+                this.updateStats();
+            }
+
+            formatDate(dateString) {
+                if (!dateString) return 'Not set';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+
+            isOverdue(dueDate, completed) {
+                if (!dueDate || completed) return false;
+                return new Date(dueDate) < new Date().setHours(0, 0, 0, 0);
+            }
+
+            getPriorityInfo(priority) {
+                const priorityMap = {
+                    high: { 
+                        icon: 'fa-exclamation-triangle', 
+                        color: 'text-red-600', 
+                        bgColor: 'bg-red-50',
+                        borderColor: 'border-red-200',
+                        textColor: 'text-red-800'
+                    },
+                    medium: { 
+                        icon: 'fa-minus', 
+                        color: 'text-yellow-600', 
+                        bgColor: 'bg-yellow-50',
+                        borderColor: 'border-yellow-200',
+                        textColor: 'text-yellow-800'
+                    },
+                    low: { 
+                        icon: 'fa-arrow-down', 
+                        color: 'text-green-600', 
+                        bgColor: 'bg-green-50',
+                        borderColor: 'border-green-200',
+                        textColor: 'text-green-800'
+                    }
+                };
+                return priorityMap[priority] || priorityMap.medium;
+            }
+
+            renderTasks() {
+                const tasksList = document.getElementById('tasksList');
+                
+                if (this.tasks.length === 0) {
+                    tasksList.innerHTML = `
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fas fa-clipboard-list text-4xl mb-4"></i>
+                            <p>No tasks yet. Add your first task above!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Sort tasks by order field
+                const sortedTasks = [...this.tasks].sort((a, b) => a.order - b.order);
+
+                tasksList.innerHTML = sortedTasks.map(task => {
+                    const priorityInfo = this.getPriorityInfo(task.priority);
+                    const overdue = this.isOverdue(task.dueDate, task.completed);
+                    
+                    return `
+                        <div class="border ${priorityInfo.borderColor} rounded-lg p-4 mb-4 ${task.completed ? 'bg-green-50' : priorityInfo.bgColor}">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center mb-2">
+                                        <button onclick="app.toggleTask(${task.id})" 
+                                                class="mr-3 text-xl ${task.completed ? 'text-green-600' : 'text-gray-400'} hover:text-green-600 transition-colors">
+                                            <i class="fas ${task.completed ? 'fa-check-circle' : 'fa-circle'}"></i>
+                                        </button>
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-2">
+                                                <h3 class="text-lg font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-800'}">
+                                                    ${task.title}
+                                                </h3>
+                                                ${overdue && !task.completed ? '<span class="text-red-600 text-sm font-medium">OVERDUE</span>' : ''}
+                                            </div>
+                                            <div class="flex items-center space-x-4 mt-1">
+                                                <span class="text-sm text-gray-600">
+                                                    <i class="fas fa-sort-numeric-up mr-1"></i>Order: ${task.order}
+                                                </span>
+                                                <span class="text-sm ${priorityInfo.textColor}">
+                                                    <i class="fas ${priorityInfo.icon} mr-1"></i>${task.priority.toUpperCase()}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ml-8">
+                                        <div class="text-sm">
+                                            <span class="font-medium text-gray-600">Start Date:</span>
+                                            <span class="${task.completed ? 'text-green-600' : 'text-gray-800'} ml-1">
+                                                ${this.formatDate(task.startDate)}
+                                            </span>
+                                        </div>
+                                        <div class="text-sm">
+                                            <span class="font-medium text-gray-600">Due Date:</span>
+                                            <span class="${overdue && !task.completed ? 'text-red-600' : task.completed ? 'text-green-600' : 'text-gray-800'} ml-1">
+                                                ${this.formatDate(task.dueDate)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button onclick="app.deleteTask(${task.id})" 
+                                        class="text-red-500 hover:text-red-700 ml-4 transition-colors">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            updateStats() {
+                const total = this.tasks.length;
+                const completed = this.tasks.filter(t => t.completed).length;
+                const highPriority = this.tasks.filter(t => t.priority === 'high' && !t.completed).length;
+                const overdue = this.tasks.filter(t => this.isOverdue(t.dueDate, false)).length;
+
+                document.getElementById('totalTasks').textContent = total;
+                document.getElementById('completedTasks').textContent = completed;
+                document.getElementById('highPriorityTasks').textContent = highPriority;
+                document.getElementById('overdueTasks').textContent = overdue;
+            }
+        }
+
+        // Initialize the app
+        const app = new TodoApp();
+    </script>
+</body>
+</html>
